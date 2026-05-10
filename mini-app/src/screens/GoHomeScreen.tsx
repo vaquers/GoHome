@@ -281,16 +281,7 @@ export function GoHomeScreen() {
         ))}
       </div>
 
-      {/* Search FAB */}
-      <button
-        className="gh-search-fab"
-        onClick={() => setSearchOpen(true)}
-        aria-label="Найти автобус"
-      >
-        <img src={searchIcon} alt="" className="gh-search-fab-icon" />
-      </button>
-
-      {/* TabBar */}
+      {/* TabBar + Search FAB */}
       <div className="gh-tabbar-wrapper">
         <nav className="gh-tabbar-pill">
           <div
@@ -320,6 +311,14 @@ export function GoHomeScreen() {
             <span className="gh-tabbar-label">Домой</span>
           </button>
         </nav>
+
+        <button
+          className="gh-search-fab"
+          onClick={() => setSearchOpen(true)}
+          aria-label="Найти автобус"
+        >
+          <img src={searchIcon} alt="" className="gh-search-fab-icon" />
+        </button>
       </div>
 
       {searchOpen && (

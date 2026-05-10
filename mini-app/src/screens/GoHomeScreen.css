@@ -345,6 +345,10 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  max-height: 50vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .gh-detail-section {
@@ -469,17 +473,17 @@
   right: 0;
   z-index: 1000;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 12px 48px calc(var(--safe-bottom, 0px) + 12px);
+  justify-content: space-between;
+  padding: 12px 20px calc(var(--safe-bottom, 0px) + 12px);
+  gap: 12px;
   pointer-events: none;
 }
 
 .gh-tabbar-pill {
   pointer-events: auto;
   position: relative;
-  flex: 1;
-  max-width: 220px;
+  width: 188px;
   height: var(--tabbar-height, 62px);
   background: rgba(33, 33, 33, 0.6);
   backdrop-filter: blur(20px);
@@ -493,6 +497,7 @@
   align-items: center;
   padding: 4px;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .gh-tabbar-indicator {
@@ -563,11 +568,8 @@
 
 .gh-search-fab {
   pointer-events: auto;
-  position: fixed;
-  right: 20px;
-  bottom: calc(var(--safe-bottom, 0px) + 86px);
-  width: 52px;
-  height: 52px;
+  width: 62px;
+  height: 62px;
   border-radius: 9999px;
   border: none;
   background: rgba(33, 33, 33, 0.6);
@@ -583,7 +585,7 @@
   transition: transform 0.15s ease, background 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   padding: 0;
-  z-index: 1000;
+  flex-shrink: 0;
 }
 
 .gh-search-fab:active {
