@@ -2,6 +2,6 @@
 builder = "nixpacks"
 
 [deploy]
-preDeployCommand = "psql $DATABASE_URL -f server/db/gohome_schema.sql"
+preDeployCommand = "python -c \"import os,psycopg2;c=psycopg2.connect(os.environ['DATABASE_URL']);cur=c.cursor();cur.execute(open('server/db/gohome_schema.sql').read());c.commit();c.close();print('Schema applied')\""
 startCommand = "uvicorn server.gohome_app:app --host 0.0.0.0 --port $PORT"
 restartPolicyType = "on_failure"
