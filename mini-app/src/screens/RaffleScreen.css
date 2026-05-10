@@ -1,0 +1,80 @@
+.raffle-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+}
+
+.raffle-waiting {
+  text-align: center;
+}
+
+.raffle-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.raffle-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.raffle-winner-card {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 28px 40px;
+  display: flex;
+  align-items: center;
+}
+
+.raffle-winner-card--spin {
+  animation: raffle-pulse 0.15s infinite alternate;
+}
+
+@keyframes raffle-pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.02); }
+}
+
+.raffle-winner-numbers {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.raffle-winner-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.raffle-winner-caption {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.raffle-winner-value {
+  font-size: 72px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.96);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  min-width: 80px;
+  text-align: center;
+}
+
+.raffle-winner-divider {
+  width: 1px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.1);
+}

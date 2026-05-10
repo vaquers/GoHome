@@ -1,0 +1,319 @@
+.gh-screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--page-bg);
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ── Tab Bar ──────────────────────────────────────────────────── */
+
+.gh-tab-bar {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px 8px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--page-bg);
+}
+
+.gh-tab {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.4);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gh-tab.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ── Content ──────────────────────────────────────────────────── */
+
+.gh-content {
+  flex: 1;
+  padding: 8px 16px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.gh-loading,
+.gh-error {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 15px;
+}
+
+.gh-error {
+  color: #ff6b6b;
+}
+
+.gh-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 8px;
+}
+
+.gh-empty-icon {
+  font-size: 48px;
+  opacity: 0.3;
+}
+
+.gh-empty-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.gh-empty-hint {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Route Card ───────────────────────────────────────────────── */
+
+.gh-route-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.gh-route-card.error {
+  opacity: 0.5;
+}
+
+.gh-route-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gh-route-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.gh-route-number {
+  font-size: 20px;
+  font-weight: 700;
+  color: #6ee7b7;
+  flex-shrink: 0;
+}
+
+.gh-route-name {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gh-route-error {
+  font-size: 13px;
+  color: #ff6b6b;
+}
+
+.gh-expand-icon {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.3);
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.gh-expand-icon.open {
+  transform: rotate(180deg);
+}
+
+/* ── Summary (next departures) ────────────────────────────────── */
+
+.gh-route-summary {
+  padding: 0 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gh-stop-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gh-stop-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
+}
+
+.gh-next-times {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.gh-time-chip {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+.gh-time-chip.nearest {
+  background: rgba(110, 231, 183, 0.15);
+  color: #6ee7b7;
+}
+
+.gh-time-chip.none {
+  opacity: 0.3;
+}
+
+/* ── Expanded details ─────────────────────────────────────────── */
+
+.gh-route-details {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gh-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gh-detail-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Schedule Table ───────────────────────────────────────────── */
+
+.gh-schedule-table {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gh-schedule-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.gh-schedule-label:first-child {
+  margin-top: 0;
+}
+
+.gh-hour-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.gh-hour-row.current {
+  background: rgba(110, 231, 183, 0.06);
+  border-radius: 6px;
+  padding: 3px 6px;
+  margin: 0 -6px;
+}
+
+.gh-hour {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  width: 22px;
+  text-align: right;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.gh-hour-row.current .gh-hour {
+  color: #6ee7b7;
+}
+
+.gh-minutes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.gh-min {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+.gh-no-schedule {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.25);
+  padding: 8px 0;
+}
+
+/* ── Refresh button ───────────────────────────────────────────── */
+
+.gh-refresh-btn {
+  position: fixed;
+  bottom: calc(var(--safe-bottom) + 16px);
+  right: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(110, 231, 183, 0.15);
+  color: #6ee7b7;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.gh-refresh-btn:disabled {
+  opacity: 0.4;
+}
+
+.gh-refresh-btn:active {
+  transform: scale(0.92);
+}

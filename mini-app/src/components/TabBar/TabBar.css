@@ -1,0 +1,112 @@
+.tabbar-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 48px calc(var(--safe-bottom, 0px) + 12px);
+  pointer-events: none;
+}
+
+.tabbar-pill {
+  pointer-events: auto;
+  position: relative;
+  flex: 1;
+  max-width: 220px;
+  height: var(--tabbar-height, 62px);
+  background: rgba(33, 33, 33, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: none;
+  border-radius: 9999px;
+  box-shadow:
+    0 -2px 20px rgba(0, 0, 0, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.tabbar-active-indicator {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  bottom: 4px;
+  width: calc((100% - 8px) / 2);
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 9999px;
+  z-index: 1;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.15, 1);
+  pointer-events: none;
+}
+
+.tabbar-item {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  border-radius: 24px;
+  transition: color 0.25s ease;
+  color: rgba(255, 255, 255, 0.35);
+  position: relative;
+  z-index: 2;
+  -webkit-tap-highlight-color: transparent;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: none;
+}
+
+.tabbar-item:hover {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.tabbar-item.active {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.tabbar-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  transition: opacity 0.25s ease;
+}
+
+.tabbar-item:not(.active) .tabbar-icon {
+  opacity: 0.4;
+}
+
+.tabbar-item.active .tabbar-icon {
+  opacity: 0.92;
+}
+
+.tabbar-emoji {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.tabbar-item:not(.active) .tabbar-emoji {
+  opacity: 0.4;
+}
+
+.tabbar-item.active .tabbar-emoji {
+  opacity: 0.92;
+}
+
+.tabbar-label {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: inherit;
+}

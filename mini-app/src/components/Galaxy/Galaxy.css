@@ -1,0 +1,82 @@
+.galaxy-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.galaxy-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  inset: 0;
+}
+
+.galaxy-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(60, 60, 120, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(80, 80, 160, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(40, 50, 100, 0.12) 0%, transparent 55%),
+    #08080F;
+  overflow: hidden;
+}
+
+.galaxy-fallback::before,
+.galaxy-fallback::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: starTwinkle 4s ease-in-out infinite;
+}
+
+.galaxy-fallback::before {
+  width: 2px;
+  height: 2px;
+  top: 25%;
+  left: 35%;
+  box-shadow:
+    0 0 2px 1px rgba(255, 255, 255, 0.3),
+    40vw 10vh 2px 0px rgba(255, 255, 255, 0.2),
+    15vw 60vh 1px 0px rgba(255, 255, 255, 0.25),
+    70vw 30vh 2px 1px rgba(255, 255, 255, 0.15),
+    25vw 80vh 1px 0px rgba(255, 255, 255, 0.2),
+    85vw 65vh 2px 0px rgba(255, 255, 255, 0.18),
+    55vw 15vh 1px 1px rgba(255, 255, 255, 0.22),
+    10vw 45vh 2px 0px rgba(255, 255, 255, 0.15),
+    90vw 85vh 1px 0px rgba(255, 255, 255, 0.2),
+    60vw 50vh 2px 1px rgba(255, 255, 255, 0.12),
+    30vw 20vh 1px 0px rgba(255, 255, 255, 0.25),
+    75vw 75vh 2px 0px rgba(255, 255, 255, 0.16);
+  animation-delay: 0s;
+}
+
+.galaxy-fallback::after {
+  width: 2px;
+  height: 2px;
+  top: 55%;
+  left: 65%;
+  box-shadow:
+    -20vw -15vh 1px 0px rgba(255, 255, 255, 0.2),
+    20vw -30vh 2px 1px rgba(255, 255, 255, 0.15),
+    -40vw 10vh 1px 0px rgba(255, 255, 255, 0.22),
+    35vw 20vh 2px 0px rgba(255, 255, 255, 0.18),
+    -10vw -40vh 1px 1px rgba(255, 255, 255, 0.2),
+    -50vw -20vh 2px 0px rgba(255, 255, 255, 0.14),
+    15vw 35vh 1px 0px rgba(255, 255, 255, 0.25),
+    -30vw 25vh 2px 1px rgba(255, 255, 255, 0.12),
+    45vw -10vh 1px 0px rgba(255, 255, 255, 0.2),
+    -15vw 40vh 2px 0px rgba(255, 255, 255, 0.16);
+  animation-delay: 2s;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}

@@ -1,0 +1,384 @@
+.profile-screen {
+  position: fixed;
+  inset: 0;
+  padding-bottom: var(--safe-bottom, 0px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+  background: #000;
+  animation: profileFadeIn 0.4s ease;
+}
+
+@keyframes profileFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Layer 1: Fullscreen blurred background ─── */
+
+.profile-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.profile-bg__img {
+  position: absolute;
+  inset: -15%;
+  width: 130%;
+  height: 130%;
+  object-fit: cover;
+  filter: blur(60px) saturate(130%);
+  opacity: 0.55;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform: scale(1.2);
+}
+
+.profile-bg__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* ─── Navigation ─── */
+
+.profile-nav {
+  position: fixed;
+  top: calc(var(--safe-top, 0px) + 8px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px 12px;
+  pointer-events: none;
+}
+
+.profile-nav__btn {
+  pointer-events: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s;
+  padding: 0;
+  outline: none;
+}
+
+.profile-nav__btn:active {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* ─── Layer 2: Hero Section ─── */
+
+.profile-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.profile-hero__img {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.profile-hero__gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+.profile-hero__identity {
+  position: absolute;
+  bottom: 44px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.profile-hero__name {
+  font-size: clamp(24px, 7vw, 30px);
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 4px;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+}
+
+.profile-hero__username {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* ─── Layer 3: Translucent Content Sheet ─── */
+
+.profile-sheet {
+  position: relative;
+  z-index: 2;
+  margin-top: -42px;
+  padding-bottom: calc(
+    32px + var(--safe-bottom, 0px)
+  );
+}
+
+.profile-sheet__inner {
+  background: rgba(18, 18, 26, 0.02);
+  backdrop-filter: blur(40px) saturate(140%);
+  -webkit-backdrop-filter: blur(40px) saturate(140%);
+  border-radius: 30px 30px 0 0;
+  padding: 28px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  min-height: 46vh;
+}
+
+/* ─── Instagram CTA ─── */
+
+.profile-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.profile-instagram-btn {
+  flex: 1;
+  height: 48px;
+  border-radius: 25px;
+  background: #fff;
+  border: none;
+  color: #111;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.2s, transform 0.15s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.profile-instagram-btn:active {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+.profile-instagram-btn svg {
+  flex-shrink: 0;
+}
+
+/* ─── Info Chips ─── */
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.profile-info__chip {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 9px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-info__chip-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.2;
+}
+
+.profile-info__chip-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.2;
+}
+
+/* ─── Bio ─── */
+
+.profile-bio {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}
+
+.profile-bio__text {
+  font-size: 14.5px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ─── Interview ─── */
+
+.profile-interview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.profile-interview__item {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.profile-interview__question {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.45;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.profile-interview__answer {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* ─── Gallery ─── */
+
+.profile-gallery-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-gallery-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+}
+
+.profile-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.profile-gallery__item {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s ease;
+}
+
+.profile-gallery__item:active {
+  transform: scale(0.97);
+}
+
+.profile-gallery__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+  display: block;
+}
+
+/* ─── Empty state ─── */
+
+.profile-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  gap: 20px;
+  padding: 40px;
+}
+
+.profile-empty__text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0;
+}
+
+.profile-empty__back {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition: background 0.2s;
+}
+
+.profile-empty__back:active {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 360px) {
+  .profile-sheet__inner {
+    padding: 24px 14px 32px;
+  }
+
+  .profile-gallery {
+    gap: 8px;
+  }
+
+  .profile-gallery__item {
+    border-radius: 12px;
+  }
+}

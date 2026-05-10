@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'Garet';
+  src: url('/assets/fonts/Garet-Heavy.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --page-bg: #0a0a12;
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.45);
+
+  --safe-top: calc(
+    var(--tg-viewport-content-safe-area-inset-top, 0px) +
+    var(--tg-viewport-safe-area-inset-top, env(safe-area-inset-top, 0px))
+  );
+  --safe-bottom: calc(
+    var(--tg-viewport-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)) +
+    var(--tg-viewport-content-safe-area-inset-bottom, 0px)
+  );
+  --safe-left: calc(
+    var(--tg-viewport-safe-area-inset-left, env(safe-area-inset-left, 0px)) +
+    var(--tg-viewport-content-safe-area-inset-left, 0px)
+  );
+  --safe-right: calc(
+    var(--tg-viewport-safe-area-inset-right, env(safe-area-inset-right, 0px)) +
+    var(--tg-viewport-content-safe-area-inset-right, 0px)
+  );
+
+  --tabbar-height: 62px;
+  --tabbar-total: calc(var(--tabbar-height) + var(--safe-bottom) + 16px);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-family: 'Garet', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+* {
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  background: var(--page-bg);
+}
+
+.app-global-bg {
+  position: fixed;
+  inset: 0;
+  background: var(--page-bg);
+  z-index: -1;
+  pointer-events: none;
+}
+
+button {
+  border-radius: 0;
+}
+
+@keyframes lazyImagePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

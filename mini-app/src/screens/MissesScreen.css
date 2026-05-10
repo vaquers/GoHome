@@ -1,0 +1,356 @@
+@font-face {
+  font-family: 'Soledago';
+  src: url('../../assets/fonts/Soledago.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.misses-galaxy-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: #08080F;
+  overflow: hidden;
+}
+
+.misses-screen {
+  position: fixed;
+  inset: 0;
+  padding-top: var(--safe-top, 0px);
+  padding-bottom: var(--tabbar-total, 78px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  background: transparent;
+  overscroll-behavior: none;
+  animation: screenFadeIn 0.7s ease;
+  z-index: 1;
+}
+
+@keyframes screenFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Section ─── */
+
+.miss-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 60px 16px 80px;
+}
+
+.miss-section--tappable {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.miss-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.15) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Glow ─── */
+
+.miss-glow {
+  position: absolute;
+  width: min(300px, 70vw);
+  height: min(300px, 70vw);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--section-glow, rgba(255, 255, 255, 0.06)) 0%,
+    transparent 70%
+  );
+  opacity: var(--g-opacity, 1);
+  filter: blur(40px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.miss-glow--topLeft {
+  top: -5%;
+  left: -10%;
+  transform: scale(var(--g-scale, 1));
+}
+
+.miss-glow--topRight {
+  top: -5%;
+  right: -10%;
+  left: auto;
+  transform: scale(var(--g-scale, 1));
+}
+
+.miss-glow--topCenter {
+  top: -8%;
+  left: 50%;
+  transform: translateX(-50%) scale(var(--g-scale, 1));
+}
+
+/* ─── Planet ─── */
+
+.miss-planet {
+  position: absolute;
+  width: clamp(80px, 24vw, 170px);
+  height: clamp(80px, 24vw, 170px);
+  opacity: var(--p-opacity, 1);
+  pointer-events: none;
+  will-change: transform, opacity;
+  z-index: 3;
+}
+
+.miss-planet--topLeft {
+  left: 6%;
+  top: 8%;
+  transform: translate(0, var(--p-y, 0px)) scale(var(--p-scale, 1));
+}
+
+.miss-planet--topRight {
+  right: 6%;
+  left: auto;
+  top: 8%;
+  transform: translate(0, var(--p-y, 0px)) scale(var(--p-scale, 1));
+}
+
+.miss-planet--topCenter {
+  left: 50%;
+  top: 5%;
+  transform: translate(-50%, var(--p-y, 0px)) scale(var(--p-scale, 1));
+}
+
+.miss-planet__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 0 16px var(--section-glow, transparent));
+  animation: planetFloat 10s ease-in-out infinite;
+}
+
+.miss-planet__placeholder {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+}
+
+@keyframes planetFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ─── Content wrapper ─── */
+
+.miss-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ─── Photo ─── */
+
+.miss-photo {
+  position: relative;
+  width: clamp(200px, 58vw, 300px);
+  aspect-ratio: 3 / 4;
+  border-radius: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+  transform: translateY(var(--ph-y, 0px)) scale(var(--ph-scale, 1));
+  opacity: var(--ph-opacity, 1);
+  will-change: transform, opacity;
+  box-shadow:
+    0 0 40px 8px var(--section-glow, rgba(255, 255, 255, 0.15)),
+    0 0 80px 20px var(--section-glow, rgba(255, 255, 255, 0.06)),
+    0 28px 72px -16px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.miss-photo__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.miss-photo__placeholder {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.miss-photo__fade {
+  display: none;
+}
+
+/* ─── Info ─── */
+
+.miss-info {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 24px 0;
+  transform: translateY(var(--c-y, 0px));
+  opacity: var(--c-opacity, 1);
+  will-change: transform, opacity;
+}
+
+.miss-info__name {
+  font-family: 'Soledago', sans-serif;
+  font-size: clamp(22px, 7vw, 32px);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: var(--section-text, #fff);
+  margin: 0 0 10px;
+  text-align: center;
+}
+
+.miss-info__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 28px;
+  background: rgba(69, 69, 69, 1);
+  border: none;
+  border-radius: 25px;
+  font-size: clamp(14px, 4vw, 16px);
+  font-weight: 600;
+  font-family: inherit;
+  color: rgba(255, 255, 255, 1);
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.miss-section--tappable:active .miss-info__cta {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+/* ─── Locked ─── */
+
+.miss-section--locked .miss-planet {
+  filter: blur(14px) brightness(0.2);
+  opacity: calc(var(--p-opacity, 1) * 0.35);
+}
+
+.miss-section--locked .miss-glow {
+  opacity: calc(var(--g-opacity, 1) * 0.25);
+}
+
+.miss-locked-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(var(--c-y, 0px));
+  opacity: var(--c-opacity, 1);
+  will-change: transform, opacity;
+}
+
+.miss-locked__icon {
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.12);
+  margin-bottom: 16px;
+  letter-spacing: 6px;
+}
+
+.miss-locked__title {
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 0 6px;
+  letter-spacing: -0.3px;
+}
+
+.miss-locked__subtitle {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.18);
+  margin: 0;
+}
+
+/* ─── Progress ─── */
+
+.miss-progress {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.miss-progress__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.miss-progress__dot--active {
+  width: 7px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 360px) {
+  .miss-photo {
+    width: clamp(170px, 55vw, 220px);
+  }
+
+  .miss-info__cta {
+    height: 42px;
+    padding: 0 22px;
+  }
+}
+
+@media (min-height: 800px) {
+  .miss-photo {
+    width: clamp(240px, 62vw, 320px);
+  }
+}
+
+@media (min-height: 900px) and (min-width: 400px) {
+  .miss-photo {
+    width: clamp(260px, 66vw, 340px);
+  }
+}
