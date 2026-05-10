@@ -178,7 +178,7 @@ export function GoHomeScreen() {
     try {
       const uid = tgId || 0;
       const data = await getSchedule(uid, cat);
-      setSchedules(data);
+      setSchedules(Array.isArray(data) ? data : []);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Ошибка загрузки');
     } finally {
