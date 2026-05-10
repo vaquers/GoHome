@@ -229,6 +229,9 @@ export function GoHomeScreen() {
             <div className="gh-empty-hint">
               Добавьте маршруты через бота
             </div>
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', marginTop: 8 }}>
+              tg_id: {tgId}
+            </div>
           </div>
         )}
 
