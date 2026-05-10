@@ -2,8 +2,6 @@
 builder = "nixpacks"
 
 [deploy]
-preDeployCommand = "python -m server.migrate"
-startCommand = "uvicorn server.app:app --host 0.0.0.0 --port $PORT"
-healthcheckPath = "/api/config"
-healthcheckTimeout = 30
+preDeployCommand = "psql $DATABASE_URL -f server/db/gohome_schema.sql"
+startCommand = "uvicorn server.gohome_app:app --host 0.0.0.0 --port $PORT"
 restartPolicyType = "on_failure"

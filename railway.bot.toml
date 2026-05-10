@@ -2,5 +2,5 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "python -m server.bot.main"
+startCommand = "python -m server.bot.gohome_main"
 restartPolicyType = "on_failure"
