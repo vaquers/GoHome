@@ -1,5 +1,6 @@
 .gh-screen {
-  min-height: 100dvh;
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   background: #0B000E;
@@ -13,8 +14,30 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px 8px;
+  padding: 14px 20px 4px;
   flex-shrink: 0;
+}
+
+.gh-header-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.gh-header-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.gh-header-h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.96);
+  line-height: 1.1;
 }
 
 .gh-logo {
@@ -65,15 +88,17 @@
 /* ── Content ──────────────────────────────────────────────────── */
 
 .gh-content {
-  flex: 1;
+  flex: 1 1 0;
+  min-height: 0;
   padding: 8px 16px;
-  padding-bottom: calc(var(--tabbar-total, 90px) + 12px);
+  padding-bottom: calc(var(--tabbar-total, 90px) + 16px);
   display: flex;
   flex-direction: column;
   gap: 12px;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 /* ── Loading ──────────────────────────────────────────────────── */
@@ -142,11 +167,11 @@
 /* ── Route Card ───────────────────────────────────────────────── */
 
 .gh-route-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 22px;
   overflow: hidden;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
 .gh-route-card.expanded {
@@ -161,42 +186,56 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 18px;
+  padding: 18px 20px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  gap: 12px;
 }
 
 .gh-route-title {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   min-width: 0;
 }
 
+.gh-bus-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .gh-bus-icon {
-  width: 22px;
-  height: 22px;
-  opacity: 0.5;
+  width: 20px;
+  height: 20px;
+  opacity: 0.85;
   flex-shrink: 0;
 }
 
 .gh-route-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   min-width: 0;
 }
 
 .gh-route-number {
-  font-size: 19px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.92);
-  letter-spacing: 0.02em;
+  font-size: 22px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: -0.01em;
+  line-height: 1;
 }
 
 .gh-route-name {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.42);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -224,7 +263,7 @@
 /* ── Stop previews ────────────────────────────────────────────── */
 
 .gh-route-summary {
-  padding: 0 18px 16px;
+  padding: 0 20px 18px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -280,17 +319,18 @@
 .gh-time-chip {
   font-size: 13px;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 5px 11px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.05);
   color: rgba(255, 255, 255, 0.5);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .gh-time-chip.nearest {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.92);
+  background: #0A84FF;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(10, 132, 255, 0.35);
 }
 
 .gh-time-chip.none {
@@ -416,28 +456,34 @@
 
 /* ── TabBar ───────────────────────────────────────────────────── */
 
+/*
+ * Sizes from Apple-style spec (3x device pixels):
+ *   tabbar 564x186 → 188x62 CSS px
+ *   capsule 282x162 → 94x54 CSS px
+ *   search circle ≈ tabbar height (62 CSS px)
+ */
 .gh-tabbar-wrapper {
   position: fixed;
-  bottom: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   z-index: 1000;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 12px 48px calc(var(--safe-bottom, 0px) + 12px);
+  justify-content: space-between;
+  padding: 12px 20px calc(var(--safe-bottom, 0px) + 12px);
+  gap: 12px;
   pointer-events: none;
 }
 
 .gh-tabbar-pill {
   pointer-events: auto;
   position: relative;
-  flex: 1;
-  max-width: 220px;
+  width: 188px;
   height: 62px;
   background: rgba(18, 8, 22, 0.75);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 9999px;
   box-shadow:
@@ -445,17 +491,18 @@
     0 8px 40px rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
-  padding: 4px;
+  padding: 0;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .gh-tabbar-indicator {
   position: absolute;
-  left: 4px;
+  left: 0;
   top: 4px;
-  bottom: 4px;
-  width: calc((100% - 8px) / 2);
-  background: rgba(255, 255, 255, 0.07);
+  width: 94px;
+  height: 54px;
+  background: rgba(255, 255, 255, 0.09);
   border-radius: 9999px;
   z-index: 1;
   transition: transform 0.32s cubic-bezier(0.4, 0, 0.15, 1);
@@ -513,4 +560,37 @@
   line-height: 1;
   letter-spacing: 0.03em;
   color: inherit;
+}
+
+.gh-search-fab {
+  pointer-events: auto;
+  width: 62px;
+  height: 62px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(18, 8, 22, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    0 -2px 24px rgba(0, 0, 0, 0.4),
+    0 8px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.gh-search-fab:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.gh-search-fab-icon {
+  width: 22px;
+  height: 22px;
+  opacity: 0.85;
 }

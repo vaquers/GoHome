@@ -2,17 +2,18 @@ import { useEffect, useState, useCallback } from 'react';
 import { getSchedule, type RouteSchedule, type HourEntry } from '@/api/gohomeApi';
 import './GoHomeScreen.css';
 
-import logoImg from '../../assets/logo.png';
 import busIcon from '../../assets/icons/bus.fill.svg';
 import mappinIcon from '../../assets/icons/mappin.and.ellipse.svg';
 import flagIcon from '../../assets/icons/flag.pattern.checkered.svg';
 import chevronDownIcon from '../../assets/icons/chevron.down.svg';
 import chevronUpIcon from '../../assets/icons/chevron.up.svg';
 import refreshIcon from '../../assets/icons/arrow.clockwise.svg';
+import searchIcon from '../../assets/icons/magnifyingglass.svg';
 import houseIcon from '../../assets/icons/house.svg';
 import houseFillIcon from '../../assets/icons/house.fill.svg';
 import buildingIcon from '../../assets/icons/building.2.svg';
 import buildingFillIcon from '../../assets/icons/building.2.fill.svg';
+import { RouteSearchSheet } from './RouteSearchSheet';
 
 type Category = 'minsk' | 'home';
 
@@ -105,7 +106,9 @@ function RouteCard({ data }: { data: RouteSchedule }) {
       <div className="gh-route-card error">
         <div className="gh-route-header">
           <div className="gh-route-title">
-            <img src={busIcon} alt="" className="gh-bus-icon" />
+            <div className="gh-bus-badge">
+              <img src={busIcon} alt="" className="gh-bus-icon" />
+            </div>
             <span className="gh-route-number">{data.route_number}</span>
           </div>
           <span className="gh-route-error">Ошибка загрузки</span>
@@ -121,7 +124,9 @@ function RouteCard({ data }: { data: RouteSchedule }) {
     <div className={`gh-route-card ${expanded ? 'expanded' : ''}`}>
       <div className="gh-route-header" onClick={() => setExpanded(!expanded)}>
         <div className="gh-route-title">
-          <img src={busIcon} alt="" className="gh-bus-icon" />
+          <div className="gh-bus-badge">
+            <img src={busIcon} alt="" className="gh-bus-icon" />
+          </div>
           <div className="gh-route-info">
             <span className="gh-route-number">{data.route_number}</span>
             <span className="gh-route-name">{data.route_name}</span>
@@ -202,6 +207,7 @@ export function GoHomeScreen() {
   const [schedules, setSchedules] = useState<RouteSchedule[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const tgId = getTgUserId();
 
@@ -232,11 +238,17 @@ export function GoHomeScreen() {
     <div className="gh-screen">
       {/* Header */}
       <div className="gh-header">
-        <img src={logoImg} alt="GoHome" className="gh-logo" />
+        <div className="gh-header-title">
+          <span className="gh-header-eyebrow">Расписание</span>
+          <span className="gh-header-h1">
+            {category === 'minsk' ? 'В Минск' : 'Домой'}
+          </span>
+        </div>
         <button
           className="gh-refresh-btn"
           onClick={() => loadSchedule(category)}
           disabled={loading}
+          aria-label="Обновить"
         >
           <img src={refreshIcon} alt="" className={`gh-refresh-icon ${loading ? 'spinning' : ''}`} />
         </button>
@@ -269,12 +281,12 @@ export function GoHomeScreen() {
         ))}
       </div>
 
-      {/* TabBar */}
+      {/* TabBar + Search FAB */}
       <div className="gh-tabbar-wrapper">
         <nav className="gh-tabbar-pill">
           <div
             className="gh-tabbar-indicator"
-            style={{ transform: `translateX(${category === 'minsk' ? 0 : 100}%)` }}
+            style={{ transform: `translateX(${category === 'minsk' ? 0 : 94}px)` }}
           />
           <button
             className={`gh-tabbar-item ${category === 'minsk' ? 'active' : ''}`}
@@ -299,7 +311,27 @@ export function GoHomeScreen() {
             <span className="gh-tabbar-label">Домой</span>
           </button>
         </nav>
+
+        <button
+          className="gh-search-fab"
+          onClick={() => setSearchOpen(true)}
+          aria-label="Найти автобус"
+        >
+          <img src={searchIcon} alt="" className="gh-search-fab-icon" />
+        </button>
       </div>
+
+      {searchOpen && (
+        <RouteSearchSheet
+          tgId={tgId}
+          defaultCategory={category}
+          onClose={() => setSearchOpen(false)}
+          onAdded={() => {
+            setSearchOpen(false);
+            loadSchedule(category);
+          }}
+        />
+      )}
     </div>
   );
 }

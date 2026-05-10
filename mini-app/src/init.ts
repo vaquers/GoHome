@@ -75,4 +75,12 @@ export async function init(options: {
       }
     } catch {}
   }
+
+  // Disable vertical swipes / pull-to-refresh on Telegram WebApp so
+  // in-app scroll containers can scroll without the host intercepting.
+  try {
+    const tg = (window as any).Telegram?.WebApp;
+    tg?.disableVerticalSwipes?.();
+    tg?.expand?.();
+  } catch {}
 }

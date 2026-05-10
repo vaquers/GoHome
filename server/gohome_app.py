@@ -129,3 +129,40 @@ def api_minsktrans_stops(route: str = Query(...), direction: int = Query(0)):
 @app.get("/api/minsktrans/route-info")
 def api_minsktrans_route_info(route: str = Query(...)):
     return get_route_info(route)
+
+
+# ── Search ──────────────────────────────────────────────────────
+
+@app.get("/api/search/route")
+def api_search_route(route: str = Query(..., min_length=1, max_length=8)):
+    """Search for a bus route by number. Returns route info with stops
+    for both directions so the user can pick a from/to pair."""
+    route = route.strip()
+    try:
+        info = get_route_info(route)
+    except Exception as e:
+        raise HTTPException(404, f"Маршрут {route} не найден: {e}")
+
+    if not (info.get("nameA") or info.get("nameB")):
+        raise HTTPException(404, f"Маршрут {route} не найден")
+
+    directions = []
+    for direction in (0, 1):
+        try:
+            raw_stops = get_route_stops(route, direction)
+        except Exception:
+            raw_stops = []
+        stops = [{"id": s["id"], "name": get_stop_name(s["id"])} for s in raw_stops]
+        directions.append({
+            "direction": direction,
+            "name": info.get("nameA" if direction == 0 else "nameB", ""),
+            "end_stop": info.get("endStopA" if direction == 0 else "endStopB", ""),
+            "stops": stops,
+        })
+
+    return {
+        "route_number": route,
+        "name_a": info.get("nameA", ""),
+        "name_b": info.get("nameB", ""),
+        "directions": directions,
+    }
