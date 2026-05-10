@@ -2,16 +2,26 @@ import { useEffect, useState, useCallback } from 'react';
 import { getSchedule, type RouteSchedule, type HourEntry } from '@/api/gohomeApi';
 import './GoHomeScreen.css';
 
+import logoImg from '../../assets/logo.png';
+import busIcon from '../../assets/icons/bus.fill.svg';
+import mappinIcon from '../../assets/icons/mappin.and.ellipse.svg';
+import flagIcon from '../../assets/icons/flag.pattern.checkered.svg';
+import chevronDownIcon from '../../assets/icons/chevron.down.svg';
+import chevronUpIcon from '../../assets/icons/chevron.up.svg';
+import refreshIcon from '../../assets/icons/arrow.clockwise.svg';
+import houseIcon from '../../assets/icons/house.svg';
+import houseFillIcon from '../../assets/icons/house.fill.svg';
+import buildingIcon from '../../assets/icons/building.2.svg';
+import buildingFillIcon from '../../assets/icons/building.2.fill.svg';
+
 type Category = 'minsk' | 'home';
 
 function getTgUserId(): number {
   try {
-    // Try Telegram WebApp
     const tg = (window as any).Telegram?.WebApp;
     const id = tg?.initDataUnsafe?.user?.id;
     if (id) return id;
 
-    // Try parsing tgWebAppData from launch params
     const hash = window.location.hash;
     const searchStr = window.location.search || (hash.includes('?') ? hash.slice(hash.indexOf('?')) : '');
     const params = new URLSearchParams(searchStr);
@@ -22,7 +32,6 @@ function getTgUserId(): number {
       if (userJson) return JSON.parse(userJson).id ?? 0;
     }
 
-    // Fallback: check URL param
     const urlId = params.get('tg_id');
     if (urlId) return parseInt(urlId, 10);
 
@@ -95,7 +104,10 @@ function RouteCard({ data }: { data: RouteSchedule }) {
     return (
       <div className="gh-route-card error">
         <div className="gh-route-header">
-          <span className="gh-route-number">{data.route_number}</span>
+          <div className="gh-route-title">
+            <img src={busIcon} alt="" className="gh-bus-icon" />
+            <span className="gh-route-number">{data.route_number}</span>
+          </div>
           <span className="gh-route-error">Ошибка загрузки</span>
         </div>
       </div>
@@ -106,38 +118,52 @@ function RouteCard({ data }: { data: RouteSchedule }) {
   const nextTo = getNextDepartures(data.to.schedule.today, 3);
 
   return (
-    <div className="gh-route-card">
+    <div className={`gh-route-card ${expanded ? 'expanded' : ''}`}>
       <div className="gh-route-header" onClick={() => setExpanded(!expanded)}>
         <div className="gh-route-title">
-          <span className="gh-route-number">{data.route_number}</span>
-          <span className="gh-route-name">{data.route_name}</span>
+          <img src={busIcon} alt="" className="gh-bus-icon" />
+          <div className="gh-route-info">
+            <span className="gh-route-number">{data.route_number}</span>
+            <span className="gh-route-name">{data.route_name}</span>
+          </div>
         </div>
-        <span className={`gh-expand-icon ${expanded ? 'open' : ''}`}>▾</span>
+        <img
+          src={expanded ? chevronUpIcon : chevronDownIcon}
+          alt=""
+          className="gh-chevron-icon"
+        />
       </div>
 
       <div className="gh-route-summary">
         <div className="gh-stop-preview">
-          <div className="gh-stop-label">📍 {data.from.name}</div>
-          <div className="gh-next-times">
-            {nextFrom.length ? (
-              nextFrom.map((t, i) => (
-                <span key={i} className={`gh-time-chip ${i === 0 ? 'nearest' : ''}`}>{t}</span>
-              ))
-            ) : (
-              <span className="gh-time-chip none">—</span>
-            )}
+          <img src={mappinIcon} alt="" className="gh-stop-icon" />
+          <div className="gh-stop-info">
+            <div className="gh-stop-label">{data.from.name}</div>
+            <div className="gh-next-times">
+              {nextFrom.length ? (
+                nextFrom.map((t, i) => (
+                  <span key={i} className={`gh-time-chip ${i === 0 ? 'nearest' : ''}`}>{t}</span>
+                ))
+              ) : (
+                <span className="gh-time-chip none">—</span>
+              )}
+            </div>
           </div>
         </div>
+        <div className="gh-route-connector" />
         <div className="gh-stop-preview">
-          <div className="gh-stop-label">🏁 {data.to.name}</div>
-          <div className="gh-next-times">
-            {nextTo.length ? (
-              nextTo.map((t, i) => (
-                <span key={i} className={`gh-time-chip ${i === 0 ? 'nearest' : ''}`}>{t}</span>
-              ))
-            ) : (
-              <span className="gh-time-chip none">—</span>
-            )}
+          <img src={flagIcon} alt="" className="gh-stop-icon" />
+          <div className="gh-stop-info">
+            <div className="gh-stop-label">{data.to.name}</div>
+            <div className="gh-next-times">
+              {nextTo.length ? (
+                nextTo.map((t, i) => (
+                  <span key={i} className={`gh-time-chip ${i === 0 ? 'nearest' : ''}`}>{t}</span>
+                ))
+              ) : (
+                <span className="gh-time-chip none">—</span>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -145,14 +171,21 @@ function RouteCard({ data }: { data: RouteSchedule }) {
       {expanded && (
         <div className="gh-route-details">
           <div className="gh-detail-section">
-            <div className="gh-detail-title">📍 {data.from.name}</div>
+            <div className="gh-detail-header">
+              <img src={mappinIcon} alt="" className="gh-detail-icon" />
+              <span className="gh-detail-title">{data.from.name}</span>
+            </div>
             <ScheduleTable hours={data.from.schedule.today} label="Сегодня" />
             {data.from.schedule.days.map((d, i) => (
               <ScheduleTable key={i} hours={d.hours} label={d.label} />
             ))}
           </div>
+          <div className="gh-detail-divider" />
           <div className="gh-detail-section">
-            <div className="gh-detail-title">🏁 {data.to.name}</div>
+            <div className="gh-detail-header">
+              <img src={flagIcon} alt="" className="gh-detail-icon" />
+              <span className="gh-detail-title">{data.to.name}</span>
+            </div>
             <ScheduleTable hours={data.to.schedule.today} label="Сегодня" />
             {data.to.schedule.days.map((d, i) => (
               <ScheduleTable key={i} hours={d.hours} label={d.label} />
@@ -190,7 +223,6 @@ export function GoHomeScreen() {
     loadSchedule(category);
   }, [category, loadSchedule]);
 
-  // Auto-refresh every 60s
   useEffect(() => {
     const interval = setInterval(() => loadSchedule(category), 60_000);
     return () => clearInterval(interval);
@@ -198,24 +230,26 @@ export function GoHomeScreen() {
 
   return (
     <div className="gh-screen">
-      <div className="gh-tab-bar">
+      {/* Header */}
+      <div className="gh-header">
+        <img src={logoImg} alt="GoHome" className="gh-logo" />
         <button
-          className={`gh-tab ${category === 'minsk' ? 'active' : ''}`}
-          onClick={() => setCategory('minsk')}
+          className="gh-refresh-btn"
+          onClick={() => loadSchedule(category)}
+          disabled={loading}
         >
-          🏙 В Минск
-        </button>
-        <button
-          className={`gh-tab ${category === 'home' ? 'active' : ''}`}
-          onClick={() => setCategory('home')}
-        >
-          🏠 Домой
+          <img src={refreshIcon} alt="" className={`gh-refresh-icon ${loading ? 'spinning' : ''}`} />
         </button>
       </div>
 
+      {/* Content */}
       <div className="gh-content">
-        {loading && (
-          <div className="gh-loading">Загрузка расписания...</div>
+        {loading && !schedules.length && (
+          <div className="gh-loading">
+            <div className="gh-loading-dot" />
+            <div className="gh-loading-dot" />
+            <div className="gh-loading-dot" />
+          </div>
         )}
 
         {error && (
@@ -224,29 +258,48 @@ export function GoHomeScreen() {
 
         {!loading && !error && schedules.length === 0 && (
           <div className="gh-empty">
-            <div className="gh-empty-icon">🚌</div>
+            <img src={busIcon} alt="" className="gh-empty-icon" />
             <div className="gh-empty-text">Нет маршрутов</div>
-            <div className="gh-empty-hint">
-              Добавьте маршруты через бота
-            </div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', marginTop: 8 }}>
-              tg_id: {tgId}
-            </div>
+            <div className="gh-empty-hint">Добавьте маршруты через бота</div>
           </div>
         )}
 
-        {!loading && schedules.map((s, i) => (
+        {schedules.map((s, i) => (
           <RouteCard key={`${s.route_number}-${i}`} data={s} />
         ))}
       </div>
 
-      <button
-        className="gh-refresh-btn"
-        onClick={() => loadSchedule(category)}
-        disabled={loading}
-      >
-        ↻
-      </button>
+      {/* TabBar */}
+      <div className="gh-tabbar-wrapper">
+        <nav className="gh-tabbar-pill">
+          <div
+            className="gh-tabbar-indicator"
+            style={{ transform: `translateX(${category === 'minsk' ? 0 : 100}%)` }}
+          />
+          <button
+            className={`gh-tabbar-item ${category === 'minsk' ? 'active' : ''}`}
+            onClick={() => setCategory('minsk')}
+          >
+            <img
+              src={category === 'minsk' ? buildingFillIcon : buildingIcon}
+              alt=""
+              className="gh-tabbar-icon"
+            />
+            <span className="gh-tabbar-label">В Минск</span>
+          </button>
+          <button
+            className={`gh-tabbar-item ${category === 'home' ? 'active' : ''}`}
+            onClick={() => setCategory('home')}
+          >
+            <img
+              src={category === 'home' ? houseFillIcon : houseIcon}
+              alt=""
+              className="gh-tabbar-icon"
+            />
+            <span className="gh-tabbar-label">Домой</span>
+          </button>
+        </nav>
+      </div>
     </div>
   );
 }
