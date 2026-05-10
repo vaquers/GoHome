@@ -3,7 +3,7 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  background: #0B000E;
+  background: #000000;
   padding-top: var(--safe-top);
   font-family: 'Garet', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 }
@@ -464,45 +464,44 @@
  */
 .gh-tabbar-wrapper {
   position: fixed;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   z-index: 1000;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px calc(var(--safe-bottom, 0px) + 12px);
-  gap: 12px;
+  padding: 12px 48px calc(var(--safe-bottom, 0px) + 12px);
   pointer-events: none;
 }
 
 .gh-tabbar-pill {
   pointer-events: auto;
   position: relative;
-  width: 188px;
-  height: 62px;
-  background: rgba(18, 8, 22, 0.75);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  flex: 1;
+  max-width: 220px;
+  height: var(--tabbar-height, 62px);
+  background: rgba(33, 33, 33, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: none;
   border-radius: 9999px;
   box-shadow:
-    0 -2px 24px rgba(0, 0, 0, 0.4),
-    0 8px 40px rgba(0, 0, 0, 0.5);
+    0 -2px 20px rgba(0, 0, 0, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
-  padding: 0;
+  padding: 4px;
   box-sizing: border-box;
-  flex-shrink: 0;
 }
 
 .gh-tabbar-indicator {
   position: absolute;
-  left: 0;
+  left: 4px;
   top: 4px;
-  width: 94px;
-  height: 54px;
-  background: rgba(255, 255, 255, 0.09);
+  bottom: 4px;
+  width: calc((100% - 8px) / 2);
+  background: rgba(255, 255, 255, 0.07);
   border-radius: 9999px;
   z-index: 1;
   transition: transform 0.32s cubic-bezier(0.4, 0, 0.15, 1);
@@ -518,9 +517,9 @@
   justify-content: center;
   gap: 3px;
   cursor: pointer;
-  border-radius: 9999px;
+  border-radius: 24px;
   transition: color 0.25s ease;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.35);
   position: relative;
   z-index: 2;
   -webkit-tap-highlight-color: transparent;
@@ -532,7 +531,7 @@
 }
 
 .gh-tabbar-item:hover {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .gh-tabbar-item.active {
@@ -547,7 +546,7 @@
 }
 
 .gh-tabbar-item:not(.active) .gh-tabbar-icon {
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .gh-tabbar-item.active .gh-tabbar-icon {
@@ -556,24 +555,27 @@
 
 .gh-tabbar-label {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   color: inherit;
 }
 
 .gh-search-fab {
   pointer-events: auto;
-  width: 62px;
-  height: 62px;
+  position: fixed;
+  right: 20px;
+  bottom: calc(var(--safe-bottom, 0px) + 86px);
+  width: 52px;
+  height: 52px;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(18, 8, 22, 0.75);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: none;
+  background: rgba(33, 33, 33, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   box-shadow:
-    0 -2px 24px rgba(0, 0, 0, 0.4),
-    0 8px 40px rgba(0, 0, 0, 0.5);
+    0 -2px 20px rgba(0, 0, 0, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -581,7 +583,7 @@
   transition: transform 0.15s ease, background 0.2s ease;
   -webkit-tap-highlight-color: transparent;
   padding: 0;
-  flex-shrink: 0;
+  z-index: 1000;
 }
 
 .gh-search-fab:active {
